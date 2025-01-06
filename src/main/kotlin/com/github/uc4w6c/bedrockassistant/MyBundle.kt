@@ -1,4 +1,4 @@
-package org.jetbrains.plugins.template
+package com.github.uc4w6c.bedrockassistant
 
 import com.intellij.DynamicBundle
 import org.jetbrains.annotations.NonNls
