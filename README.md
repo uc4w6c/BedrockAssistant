@@ -17,11 +17,17 @@
 - [ ] Click the <kbd>Watch</kbd> button on the top of the [IntelliJ Platform Plugin Template][template] to be notified about releases containing new features and fixes.
 
 <!-- Plugin description -->
-This Fancy IntelliJ Platform Plugin is going to be your implementation of the brilliant ideas that you have.
+# Bedrock Assistant
 
-This specific section is a source for the [plugin.xml](/src/main/resources/META-INF/plugin.xml) file which will be extracted by the [Gradle](/build.gradle.kts) during the build process.
+Bedrock Assistant is an IntelliJ plugin designed to enhance your development process using Bedrock. By leveraging the power of AI, it simplifies and accelerates your coding tasks, allowing you to focus on what truly matters—building great software.
 
-To keep everything working, do not remove `<!-- ... -->` sections. 
+## Current Features
+
+- **Analyze Code**: Gain deep insights into your code with our AI-driven analysis tools.
+
+Stay tuned as we continue to expand the capabilities of Bedrock Assistant, bringing more powerful features to your fingertips.
+
+**Download Bedrock Assistant today and unlock the potential of AI in your IntelliJ development workflow!**
 <!-- Plugin description end -->
 
 ## Installation
