@@ -9,10 +9,38 @@
     <resource-bundle>messages.MyBundle</resource-bundle>
 
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow factoryClass="com.github.uc4w6c.bedrockassistant.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>
+        <toolWindow
+                factoryClass="com.github.uc4w6c.bedrockassistant.window.BedrockAssistantToolWindowFactory"
+                id="BedrockAssistant"
+                anchor="right"/>
+        <applicationConfigurable
+                parentId="tools"
+                instance="com.github.uc4w6c.bedrockassistant.settings.BedrockAssistantSettingsConfigurable"
+                id="BedrockAssistantSettingsConfigurable"
+                displayName="BedrockAssistant"/>
+        <applicationService
+                serviceImplementation="com.github.uc4w6c.bedrockassistant.state.BedrockAssistantState"/>
+        <applicationService
+                serviceImplementation="com.github.uc4w6c.bedrockassistant.state.BedrockAssistantMessageCacheState"/>
+
+        <notificationGroup id="BedrockAssistantBalloon"
+                           displayType="BALLOON"
+                           key="BedrockAssistantBallon"/>
     </extensions>
 
+    <actions>
+        <action id="AnalyzeCodeAction"
+                class="com.github.uc4w6c.bedrockassistant.action.AnalyzeCodeAction"
+                text="Analyze code"
+                description="Analyze the selected range of code."
+        >
+            <add-to-group group-id="EditorPopupMenu" anchor="first"/>
+        </action>
+    </actions>
+
+    <!--
     <applicationListeners>
         <listener class="com.github.uc4w6c.bedrockassistant.listeners.MyApplicationActivationListener" topic="com.intellij.openapi.application.ApplicationActivationListener"/>
     </applicationListeners>
+    -->
 </idea-plugin>
