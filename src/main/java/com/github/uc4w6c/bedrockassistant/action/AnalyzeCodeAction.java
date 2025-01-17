@@ -1,13 +1,13 @@
 package com.github.uc4w6c.bedrockassistant.action;
 
-import com.github.uc4w6c.bedrockassistant.action.helper.TokenHelper;
+import com.github.uc4w6c.bedrockassistant.helper.TokenHelper;
 import com.github.uc4w6c.bedrockassistant.dao.ClaudeRepository;
 import com.github.uc4w6c.bedrockassistant.domain.AwsCredentials;
 import com.github.uc4w6c.bedrockassistant.domain.Message;
 import com.github.uc4w6c.bedrockassistant.domain.MessageRole;
 import com.github.uc4w6c.bedrockassistant.exceptions.BedrockException;
 import com.github.uc4w6c.bedrockassistant.service.BedrockAssistantToolWindowService;
-import com.github.uc4w6c.bedrockassistant.state.BedrockAssistantMessageCacheState;
+import com.github.uc4w6c.bedrockassistant.state.BedrockAssistantCacheState;
 import com.github.uc4w6c.bedrockassistant.state.BedrockAssistantState;
 import com.github.uc4w6c.bedrockassistant.window.BedrockAssistantToolWindow;
 import com.intellij.notification.NotificationGroupManager;
@@ -20,7 +20,6 @@ import com.intellij.openapi.project.Project;
 import org.codehaus.plexus.util.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
-import java.lang.reflect.Member;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -66,15 +65,14 @@ public class AnalyzeCodeAction extends AnAction {
     String userMessage = String.format(MESSAGE_TO_ASK, selectedText);
     bedrockAssistantToolWindow.addUserMessage(userMessage);
 
-    ClaudeRepository claudeRepository = new ClaudeRepository();
-
-    BedrockAssistantMessageCacheState.State bedrockAssistantMessageCacheState = BedrockAssistantMessageCacheState.getInstance().getState();
-    List<Message> cacheMessages = bedrockAssistantMessageCacheState.messages;
+    BedrockAssistantCacheState bedrockAssistantCacheState = BedrockAssistantCacheState.getInstance().getState();
+    List<Message> cacheMessages = bedrockAssistantCacheState.getDomainMessages();
     List<Message> messages = new ArrayList<>(cacheMessages);
     messages.add(new Message(MessageRole.USER, userMessage));
 
     String response = null;
     try {
+      ClaudeRepository claudeRepository = new ClaudeRepository();
       response = claudeRepository.get(optionalAwsCredentials.get(), state.region, messages);
     } catch (BedrockException e) {
       NotificationGroupManager.getInstance()
@@ -83,13 +81,13 @@ public class AnalyzeCodeAction extends AnAction {
               Bedrock call failed.
               %s
               """, e.getMessage()),
-              NotificationType.INFORMATION)
+              NotificationType.ERROR)
           .notify(project);
       return;
     }
 
     messages.add(new Message(MessageRole.ASSISTANT, response));
-    bedrockAssistantMessageCacheState.messages = messages;
+    bedrockAssistantCacheState.setDomainMessages(messages);
 
     bedrockAssistantToolWindow.addSystemMessage(response);
   }

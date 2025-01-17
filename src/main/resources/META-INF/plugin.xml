@@ -21,7 +21,7 @@
         <applicationService
                 serviceImplementation="com.github.uc4w6c.bedrockassistant.state.BedrockAssistantState"/>
         <applicationService
-                serviceImplementation="com.github.uc4w6c.bedrockassistant.state.BedrockAssistantMessageCacheState"/>
+                serviceImplementation="com.github.uc4w6c.bedrockassistant.state.BedrockAssistantCacheState"/>
 
         <notificationGroup id="BedrockAssistantBalloon"
                            displayType="BALLOON"

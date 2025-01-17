@@ -1,53 +1,51 @@
 package com.github.uc4w6c.bedrockassistant.state;
 
-import com.github.uc4w6c.bedrockassistant.domain.AwsProfile;
 import com.github.uc4w6c.bedrockassistant.domain.Message;
-import com.github.uc4w6c.bedrockassistant.repository.ProfileRepository;
+import com.github.uc4w6c.bedrockassistant.domain.MessageRole;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
 import com.intellij.openapi.components.StoragePathMacros;
+import com.intellij.util.xmlb.XmlSerializerUtil;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
-import java.util.function.Function;
 
-@State(
-    name = "com.github.uc4w6c.bedrockassistant.state.BedrockAssistantMessageCacheState",
-    storages = @Storage(StoragePathMacros.CACHE_FILE)
-)
-public class BedrockAssistantMessageCacheState implements PersistentStateComponent<BedrockAssistantMessageCacheState.State> {
-  private BedrockAssistantMessageCacheState.State state = new BedrockAssistantMessageCacheState.State();
+public class BedrockAssistantMessageCacheState {
+  public MessageRole role;
+  public String content;
 
-  public static BedrockAssistantMessageCacheState getInstance() {
-    return ApplicationManager.getApplication()
-        .getService(BedrockAssistantMessageCacheState.class);
+  public BedrockAssistantMessageCacheState() {
   }
 
-  @Override
-  public void initializeComponent() {
-    BedrockAssistantMessageCacheState.State state = this.getState();
-    if (state.messages == null) {
-      state.messages = Collections.emptyList();
-    }
+  public BedrockAssistantMessageCacheState(MessageRole role, String content) {
+    this.role = role;
+    this.content = content;
   }
 
-  @Override
-  public BedrockAssistantMessageCacheState.State getState() {
-    return state;
+  public MessageRole getRole() {
+    return role;
   }
 
-  @Override
-  public void loadState(@NotNull BedrockAssistantMessageCacheState.State state) {
-    state = state;
+  public void setRole(MessageRole role) {
+    this.role = role;
   }
 
-  public static class State {
-    public List<Message> messages;
+  public String getContent() {
+    return content;
+  }
+
+  public void setContent(String content) {
+    this.content = content;
+  }
+
+  public Message toDomain() {
+    return new Message(this.role, this.content);
+  }
+
+  public static BedrockAssistantMessageCacheState of(Message message) {
+    return new BedrockAssistantMessageCacheState(message.role(), message.content());
   }
 }

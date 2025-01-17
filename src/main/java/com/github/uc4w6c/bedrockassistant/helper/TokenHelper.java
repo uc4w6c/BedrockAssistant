@@ -1,4 +1,4 @@
-package com.github.uc4w6c.bedrockassistant.action.helper;
+package com.github.uc4w6c.bedrockassistant.helper;
 
 import com.github.uc4w6c.bedrockassistant.dao.AssumeRoleRepository;
 import com.github.uc4w6c.bedrockassistant.dao.ProfileDao;

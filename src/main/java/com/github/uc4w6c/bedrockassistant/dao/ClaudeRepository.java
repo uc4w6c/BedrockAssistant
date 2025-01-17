@@ -1,6 +1,5 @@
 package com.github.uc4w6c.bedrockassistant.dao;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.uc4w6c.bedrockassistant.dao.entity.BedrockMessageRequestEntity;
 import com.github.uc4w6c.bedrockassistant.dao.entity.BedrockRequestEntity;
@@ -26,10 +25,13 @@ public class ClaudeRepository {
   public String get(AwsCredentials awsCredentials, String bedrockRegion, List<Message> messages) {
     Region region = Region.of(bedrockRegion);
 
-    List<BedrockMessageRequestEntity> requestMessages =  messages.stream()
+    List<BedrockMessageRequestEntity> message =  messages.stream()
         .map(BedrockMessageRequestEntity::of)
         .toList();
-    BedrockRequestEntity bedrockRequestEntity = new BedrockRequestEntity("bedrock-2023-05-31", requestMessages, 1024);
+    BedrockRequestEntity bedrockRequestEntity = new BedrockRequestEntity(
+        "bedrock-2023-05-31",
+        message,
+        1024);
 
     try {
       ObjectMapper objectMapper = new ObjectMapper();

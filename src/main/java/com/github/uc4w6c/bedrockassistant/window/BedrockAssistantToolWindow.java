@@ -3,20 +3,20 @@ package com.github.uc4w6c.bedrockassistant.window;
 import com.github.uc4w6c.bedrockassistant.window.component.MessagePanel;
 import com.intellij.icons.AllIcons;
 import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.ui.components.JBTextArea;
 import com.intellij.util.ui.JBUI;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class BedrockAssistantToolWindow {
   private JPanel mainPanel;
   private JPanel conversationArea;
   private JScrollPane conversationScrollPane;
-  private JTextField inputField;
+  private JBTextArea inputArea;
   private JButton sendButton;
   private Function<String, String> sendActionListener;
 
@@ -35,21 +35,30 @@ public class BedrockAssistantToolWindow {
     conversationArea.setMaximumSize(new Dimension(CONVERSATION_AREA_MAX_WIDTH, Integer.MAX_VALUE));
     conversationScrollPane = new JScrollPane(conversationArea);
 
-    inputField = new JTextField();
+    inputArea = new JBTextArea();
+    inputArea.setLineWrap(true);
+    inputArea.setWrapStyleWord(true);
+    inputArea.setRows(5);
     sendButton = new JButton("Send");
     sendButton.addActionListener(actionEvent -> {
-      if (StringUtils.isBlank(inputField.getText())) {
+      if (StringUtils.isBlank(inputArea.getText())) {
         return;
       }
-      this.addUserMessage(inputField.getText());
-      String result = sendActionListener.apply(inputField.getText());
-      this.addSystemMessage(result);
-      inputField.setText("");
+      ApplicationManager.getApplication().executeOnPooledThread(() -> {
+        String value = inputArea.getText();
+        this.addUserMessage(value);
+        inputArea.setText("");
+        String result = sendActionListener.apply(value);
+        if (result == null) return;
+        this.addSystemMessage(result);
+      });
     });
 
     JPanel inputPanel = new JPanel(new BorderLayout());
-    inputPanel.add(inputField, BorderLayout.CENTER);
-    inputPanel.add(sendButton, BorderLayout.EAST);
+    inputPanel.add(inputArea, BorderLayout.NORTH);
+    JPanel sendButtonPanel = new JPanel(new BorderLayout());
+    sendButtonPanel.add(sendButton, BorderLayout.EAST);
+    inputPanel.add(sendButtonPanel, BorderLayout.SOUTH);
 
     mainPanel.add(conversationScrollPane, BorderLayout.CENTER);
     mainPanel.add(inputPanel, BorderLayout.SOUTH);
