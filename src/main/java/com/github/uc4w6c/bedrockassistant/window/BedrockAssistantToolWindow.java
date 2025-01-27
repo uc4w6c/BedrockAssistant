@@ -10,6 +10,8 @@ import org.apache.commons.lang3.StringUtils;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.util.function.Function;
 
 public class BedrockAssistantToolWindow {
@@ -34,6 +36,21 @@ public class BedrockAssistantToolWindow {
     conversationArea.setLayout(new BoxLayout(conversationArea, BoxLayout.Y_AXIS));
     conversationArea.setMaximumSize(new Dimension(CONVERSATION_AREA_MAX_WIDTH, Integer.MAX_VALUE));
     conversationScrollPane = new JScrollPane(conversationArea);
+    conversationScrollPane.addComponentListener(new ComponentAdapter() {
+      @Override
+      public void componentResized(ComponentEvent componentEvent) {
+        for (Component component : conversationArea.getComponents()) {
+          if (component instanceof JPanel) {
+            component.setMaximumSize(
+                new Dimension(
+                    conversationScrollPane.getViewport().getWidth(),
+                    component.getPreferredSize().height));
+          }
+          conversationArea.revalidate();
+          conversationArea.repaint();
+        }
+      }
+    });
 
     inputArea = new JBTextArea();
     inputArea.setLineWrap(true);
@@ -87,8 +104,13 @@ public class BedrockAssistantToolWindow {
     messageArea.setWrapStyleWord(true);
     messageArea.setEditable(false);
 
+    messageArea.setMaximumSize(new Dimension(conversationScrollPane.getViewport().getWidth(), Integer.MAX_VALUE));
+
     messagePanel.add(iconLabel, BorderLayout.WEST);
     messagePanel.add(messageArea, BorderLayout.CENTER);
+
+    messagePanel.setMaximumSize(new Dimension(conversationScrollPane.getViewport().getWidth(), messagePanel.getPreferredSize().height));
+    messagePanel.setAlignmentX(Component.LEFT_ALIGNMENT);
 
     conversationArea.add(messagePanel);
     conversationArea.revalidate();
@@ -102,5 +124,4 @@ public class BedrockAssistantToolWindow {
       verticalScrollBar.setValue(verticalScrollBar.getMaximum());
     });
   }
-
 }
