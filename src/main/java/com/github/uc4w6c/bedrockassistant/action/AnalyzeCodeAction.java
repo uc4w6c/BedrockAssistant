@@ -17,6 +17,8 @@ import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.wm.ToolWindow;
+import com.intellij.openapi.wm.ToolWindowManager;
 import org.codehaus.plexus.util.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
@@ -36,23 +38,31 @@ public class AnalyzeCodeAction extends AnAction {
   @Override
   public void actionPerformed(@NotNull AnActionEvent anActionEvent) {
     Project project = anActionEvent.getProject();
-    if (project == null) return;
+    if (project == null) throw new RuntimeException();;
 
     Editor editor = anActionEvent.getData(CommonDataKeys.EDITOR);
     if (editor == null) {
-      return;
+      throw new RuntimeException();
     }
     String selectedText = editor.getSelectionModel().getSelectedText();
     if (StringUtils.isBlank(selectedText)) {
       return;
     }
 
+    ToolWindowManager toolWindowManager = ToolWindowManager.getInstance(project);
+    ToolWindow toolWindow = toolWindowManager.getToolWindow("BedrockAssistantToolWindow");
+    if (toolWindow == null) {
+      throw new RuntimeException();
+    }
+    if (!toolWindow.isVisible()) {
+      toolWindow.show();
+    }
+
     BedrockAssistantToolWindow bedrockAssistantToolWindow = BedrockAssistantToolWindowService.getInstance(project)
         .getBedrockAssistantToolWindow();
 
     if (bedrockAssistantToolWindow == null) {
-      // TODO: open ToolWindow
-      return;
+      throw new RuntimeException();
     }
     BedrockAssistantState.State state = BedrockAssistantState.getInstance().getState();
 

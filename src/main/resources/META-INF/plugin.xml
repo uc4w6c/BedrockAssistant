@@ -11,7 +11,7 @@
     <extensions defaultExtensionNs="com.intellij">
         <toolWindow
                 factoryClass="com.github.uc4w6c.bedrockassistant.window.BedrockAssistantToolWindowFactory"
-                id="BedrockAssistant"
+                id="BedrockAssistantToolWindow"
                 anchor="right"/>
         <applicationConfigurable
                 parentId="tools"
@@ -25,7 +25,7 @@
 
         <notificationGroup id="BedrockAssistantBalloon"
                            displayType="BALLOON"
-                           key="BedrockAssistantBallon"/>
+                           key="BedrockAssistantBalloon"/>
     </extensions>
 
     <actions>
