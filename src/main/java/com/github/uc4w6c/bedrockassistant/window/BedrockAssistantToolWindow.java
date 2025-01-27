@@ -72,6 +72,7 @@ public class BedrockAssistantToolWindow {
     });
 
     JPanel inputPanel = new JPanel(new BorderLayout());
+    inputPanel.setBorder(BorderFactory.createEmptyBorder());
     inputPanel.add(inputArea, BorderLayout.NORTH);
     JPanel sendButtonPanel = new JPanel(new BorderLayout());
     sendButtonPanel.add(sendButton, BorderLayout.EAST);
@@ -111,14 +112,16 @@ public class BedrockAssistantToolWindow {
     messagePanel.add(iconLabel, BorderLayout.WEST);
     messagePanel.add(messageArea, BorderLayout.CENTER);
 
-    messagePanel.setMaximumSize(new Dimension(conversationScrollPane.getViewport().getWidth(), messagePanel.getPreferredSize().height));
+    messagePanel.setMaximumSize(
+        new Dimension(
+            conversationScrollPane.getViewport().getWidth(),
+            messagePanel.getPreferredSize().height));
+
     messagePanel.setAlignmentX(Component.LEFT_ALIGNMENT);
 
     conversationArea.add(messagePanel);
     conversationArea.revalidate();
     conversationArea.repaint();
-
-    messagePanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, messagePanel.getPreferredSize().height));
 
     // Scroll to the bottom
     ApplicationManager.getApplication().invokeLater(() -> {
