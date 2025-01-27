@@ -4,13 +4,19 @@ import software.amazon.awssdk.profiles.Profile;
 import software.amazon.awssdk.profiles.ProfileFile;
 import software.amazon.awssdk.profiles.ProfileFileSupplier;
 
+import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
 
 public class ProfileDao {
   public Map<String, Profile> getProfiles() {
-    ProfileFile profileFile = ProfileFileSupplier.defaultSupplier().get();
-    return profileFile.profiles();
+    try {
+      ProfileFile profileFile = ProfileFileSupplier.defaultSupplier().get();
+      return profileFile.profiles();
+    } catch (NullPointerException e) {
+      // ignore NullPointerException
+      return Collections.emptyMap();
+    }
   }
 
   public Optional<Profile> getProfile(String profileName) {
