@@ -104,6 +104,8 @@ public class BedrockAssistantToolWindow {
     messageArea.setWrapStyleWord(true);
     messageArea.setEditable(false);
 
+    messageArea.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
+
     messageArea.setMaximumSize(new Dimension(conversationScrollPane.getViewport().getWidth(), Integer.MAX_VALUE));
 
     messagePanel.add(iconLabel, BorderLayout.WEST);

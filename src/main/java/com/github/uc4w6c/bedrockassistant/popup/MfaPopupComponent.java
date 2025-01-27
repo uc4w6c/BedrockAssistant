@@ -25,7 +25,7 @@ public class MfaPopupComponent extends JPanel {
     mfaLabel.setBorder(new EmptyBorder(5, 0, 5, 0));
     this.add(mfaLabel, BorderLayout.NORTH);
 
-    mfaTextfield.setBorder(BorderFactory.createEmptyBorder());
+    mfaTextfield.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
     mfaTextfield.requestFocus();
     this.add(mfaTextfield, BorderLayout.CENTER);
 
