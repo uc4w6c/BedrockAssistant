@@ -27,6 +27,9 @@ public class AssumeRoleRepository {
     if (profile.region().isPresent()) {
       builder.assumeRoleRegion(profile.region().get());
     }
+    if (profile.roleSessionName().isPresent()) {
+      builder.roleSessionName(profile.roleSessionName().get());
+    }
     builder.mfaSerial(profile.mfaSerial().get());
     builder.tokenCode(tokenCode);
 
@@ -39,11 +42,16 @@ public class AssumeRoleRepository {
   }
 
   public AwsCredentials getToken(AwsProfile profile) {
-    AssumeRoleRequestEntity request = new AssumeRoleRequestEntity.Builder()
-        .roleArn(profile.roleArn().get())
-        .build();
+    AssumeRoleRequestEntity.Builder builder = new AssumeRoleRequestEntity.Builder();
+    builder.roleArn(profile.roleArn().get());
+    if (profile.region().isPresent()) {
+      builder.assumeRoleRegion(profile.region().get());
+    }
+    if (profile.roleSessionName().isPresent()) {
+      builder.roleSessionName(profile.roleSessionName().get());
+    }
 
-    AssumeRoleResponse response = assumeRoleDao.getToken(request);
+    AssumeRoleResponse response = assumeRoleDao.getToken(builder.build());
     return new AwsCredentials(
         response.credentials().accessKeyId(),
         response.credentials().secretAccessKey(),

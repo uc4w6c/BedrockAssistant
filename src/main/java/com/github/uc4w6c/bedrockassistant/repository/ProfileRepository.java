@@ -23,8 +23,9 @@ public class ProfileRepository {
             new AwsProfile(
                 entry.getKey(),
                 entry.getValue().property("region"),
-                entry.getValue().property("role-arn"),
-                entry.getValue().property("mfa-serial")))
+                entry.getValue().property("role_arn"),
+                entry.getValue().property("mfa_serial"),
+                entry.getValue().property("role_session_name")))
         .collect(Collectors.toSet());
   }
 
@@ -33,6 +34,7 @@ public class ProfileRepository {
     return optionalProfile.map(profile -> new AwsProfile(profile.name(),
         profile.property("region"),
         profile.property("role_arn"),
-        profile.property("mfa_serial")));
+        profile.property("mfa_serial"),
+        profile.property("role_session_name")));
   }
 }
