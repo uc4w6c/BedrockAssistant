@@ -1,7 +1,6 @@
 package com.github.uc4w6c.bedrockassistant.helper;
 
-import com.github.uc4w6c.bedrockassistant.dao.AssumeRoleRepository;
-import com.github.uc4w6c.bedrockassistant.dao.ProfileDao;
+import com.github.uc4w6c.bedrockassistant.repository.AssumeRoleRepository;
 import com.github.uc4w6c.bedrockassistant.domain.AwsCredentials;
 import com.github.uc4w6c.bedrockassistant.domain.AwsProfile;
 import com.github.uc4w6c.bedrockassistant.exceptions.TokenException;
@@ -46,6 +45,15 @@ public class TokenHelper {
       return Optional.empty();
     }
     AwsProfile awsProfile = optionalAwsProfile.get();
+    if (awsProfile.roleArn().isEmpty()) {
+      NotificationGroupManager.getInstance()
+          .getNotificationGroup("BedrockAssistantBalloon")
+          .createNotification(String.format("The role-arn is not specified for the specified profile(%s).", profileName),
+              NotificationType.ERROR)
+          .notify(project);
+      return Optional.empty();
+    }
+
     AssumeRoleRepository assumeRoleRepository = new AssumeRoleRepository();
 
     if (awsProfile.mfaSerial().isPresent()) {
@@ -60,7 +68,7 @@ public class TokenHelper {
         ApplicationManager.getApplication().executeOnPooledThread(() -> {
           AwsCredentials awsCredentials = null;
           try {
-            awsCredentials = assumeRoleRepository.getTokenWithMfa(awsProfile.mfaSerial().get(), mfa);
+            awsCredentials = assumeRoleRepository.getTokenWithMfa(awsProfile, mfa);
           } catch (TokenException e) {
             NotificationGroupManager.getInstance()
                 .getNotificationGroup("BedrockAssistantBalloon")
@@ -93,7 +101,7 @@ public class TokenHelper {
 
     AwsCredentials awsCredentials = null;
     try {
-      awsCredentials = assumeRoleRepository.getToken(awsProfile.name());
+      awsCredentials = assumeRoleRepository.getToken(awsProfile);
     } catch (TokenException e) {
       NotificationGroupManager.getInstance()
           .getNotificationGroup("BedrockAssistantBalloon")

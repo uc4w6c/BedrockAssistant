@@ -1,7 +1,7 @@
 package com.github.uc4w6c.bedrockassistant.action;
 
 import com.github.uc4w6c.bedrockassistant.helper.TokenHelper;
-import com.github.uc4w6c.bedrockassistant.dao.ClaudeRepository;
+import com.github.uc4w6c.bedrockassistant.repository.BedrockRepository;
 import com.github.uc4w6c.bedrockassistant.domain.AwsCredentials;
 import com.github.uc4w6c.bedrockassistant.domain.Message;
 import com.github.uc4w6c.bedrockassistant.domain.MessageRole;
@@ -82,8 +82,8 @@ public class AnalyzeCodeAction extends AnAction {
 
     String response = null;
     try {
-      ClaudeRepository claudeRepository = new ClaudeRepository();
-      response = claudeRepository.get(optionalAwsCredentials.get(), state.region, messages);
+      BedrockRepository bedrockRepository = new BedrockRepository();
+      response = bedrockRepository.get(optionalAwsCredentials.get(), state.region, messages);
     } catch (BedrockException e) {
       NotificationGroupManager.getInstance()
           .getNotificationGroup("BedrockAssistantBalloon")
