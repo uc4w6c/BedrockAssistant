@@ -9,12 +9,14 @@ import java.util.Optional;
  * @param region
  * @param roleArn
  * @param mfaSerial
+ * @param roleSessionName
  */
 public record AwsProfile(
     String name,
     Optional<String> region,
     Optional<String> roleArn,
-    Optional<String> mfaSerial
+    Optional<String> mfaSerial,
+    Optional<String> roleSessionName
 ) {
   @Override
   public boolean equals(Object o) {

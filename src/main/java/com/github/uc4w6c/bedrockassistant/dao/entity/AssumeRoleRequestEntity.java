@@ -6,13 +6,15 @@ public record AssumeRoleRequestEntity(
     String roleArn,
     Optional<String> assumeRoleRegion,
     Optional<String> mfaSerial,
-    Optional<String> tokenCode
+    Optional<String> tokenCode,
+    Optional<String> roleSessionName
 ) {
   public static class Builder {
     String roleArn = null;
     Optional<String> assumeRoleRegion = Optional.empty();
     Optional<String> mfaSerial = Optional.empty();
     Optional<String> tokenCode = Optional.empty();
+    Optional<String> roleSessionName = Optional.empty();
 
     public Builder roleArn(String roleArn) {
       this.roleArn = roleArn;
@@ -34,6 +36,11 @@ public record AssumeRoleRequestEntity(
       return this;
     }
 
+    public Builder roleSessionName(String roleSessionName) {
+      this.roleSessionName = Optional.of(roleSessionName);
+      return this;
+    }
+
     public AssumeRoleRequestEntity build() {
       if (this.roleArn == null) throw new IllegalArgumentException();
       if (this.mfaSerial.isPresent() != this.tokenCode.isPresent()) throw new IllegalArgumentException();
@@ -42,7 +49,8 @@ public record AssumeRoleRequestEntity(
           this.roleArn,
           this.assumeRoleRegion,
           this.mfaSerial,
-          this.tokenCode);
+          this.tokenCode,
+          this.roleSessionName);
     }
   }
 }

@@ -15,13 +15,15 @@ public class AssumeRoleDao {
   public AssumeRoleResponse getToken(AssumeRoleRequestEntity requestEntity) {
     AssumeRoleRequest.Builder requestBuilder = AssumeRoleRequest
         .builder()
-        .roleArn(requestEntity.roleArn())
-        .roleSessionName(UUID.randomUUID().toString());
+        .roleArn(requestEntity.roleArn());
 
     if (requestEntity.mfaSerial().isPresent()) {
       requestBuilder.serialNumber(requestEntity.mfaSerial().get());
       requestBuilder.tokenCode(requestEntity.tokenCode().get());
     }
+    requestBuilder.roleSessionName(
+        requestEntity.roleSessionName()
+            .orElse(UUID.randomUUID().toString()));
     AssumeRoleRequest request = requestBuilder.build();
 
     StsClientBuilder stsClientBuilder = StsClient.builder();
