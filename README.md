@@ -24,6 +24,7 @@ Bedrock Assistant is an IntelliJ plugin designed to enhance your development pro
 ## Current Features
 
 - **Analyze Code**: Gain deep insights into your code with our AI-driven analysis tools.
+- **Generate Code**: Simply provide instructions, and AI will generate the corresponding code for you.
 
 Stay tuned as we continue to expand the capabilities of Bedrock Assistant, bringing more powerful features to your fingertips.
 
