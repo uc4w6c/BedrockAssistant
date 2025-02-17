@@ -36,6 +36,14 @@
         >
             <add-to-group group-id="EditorPopupMenu" anchor="first"/>
         </action>
+        <action id="CodeGenerateAction"
+                class="com.github.uc4w6c.bedrockassistant.action.CodeGenerateAction"
+                text="Generate code"
+                description="Generate code using Bedrock."
+        >
+            <keyboard-shortcut keymap="$default" first-keystroke="control shift L"/>
+            <add-to-group group-id="EditorPopupMenu" anchor="first"/>
+        </action>
     </actions>
 
     <!--
