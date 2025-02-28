@@ -2,6 +2,7 @@ package com.github.uc4w6c.bedrockassistant.popup;
 
 import com.intellij.openapi.ui.popup.JBPopup;
 import com.intellij.openapi.ui.popup.JBPopupFactory;
+import com.intellij.ui.components.JBLabel;
 import com.intellij.ui.components.JBTextField;
 
 import javax.swing.*;
@@ -18,6 +19,10 @@ public class PromptPopupComponent extends JPanel {
     super(new BorderLayout());
     this.setBorder(new EmptyBorder(10, 10, 10, 10));
     this.setEnabled(true);
+
+    JBLabel mfaLabel = new JBLabel("Enter instructions for generating code");
+    mfaLabel.setBorder(new EmptyBorder(5, 0, 5, 0));
+    this.add(mfaLabel, BorderLayout.NORTH);
 
     promptTextfield.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
     promptTextfield.requestFocus();
