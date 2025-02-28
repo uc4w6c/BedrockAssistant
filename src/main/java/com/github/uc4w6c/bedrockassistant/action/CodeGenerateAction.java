@@ -68,12 +68,6 @@ public class CodeGenerateAction extends AnAction {
     }
 
     Consumer<String> submitActionListener = (promptText) -> {
-      BedrockAssistantToolWindow bedrockAssistantToolWindow = BedrockAssistantToolWindowService.getInstance(project)
-          .getBedrockAssistantToolWindow();
-
-      if (bedrockAssistantToolWindow == null) {
-        throw new RuntimeException();
-      }
       BedrockAssistantState.State state = BedrockAssistantState.getInstance().getState();
 
       TokenHelper tokenHelper = new TokenHelper();
