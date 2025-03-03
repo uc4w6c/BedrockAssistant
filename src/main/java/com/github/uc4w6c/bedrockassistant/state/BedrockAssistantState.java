@@ -19,7 +19,7 @@ import java.util.function.Function;
     storages = @Storage("BedrockAssistant.xml")
 )
 public class BedrockAssistantState implements PersistentStateComponent<BedrockAssistantState.State> {
-  private final State state = new State();
+  private State state = new State();
 
   private static final String DEFAULT_PROFILE = "default";
   private static final String DEFAULT_REGION = Region.US_EAST_1.id();
@@ -31,8 +31,7 @@ public class BedrockAssistantState implements PersistentStateComponent<BedrockAs
 
   @Override
   public void initializeComponent() {
-    State state = this.getState();
-    if (!Objects.isNull(state.profile)) {
+    if (state.profile != null) {
       return;
     }
 
@@ -67,7 +66,7 @@ public class BedrockAssistantState implements PersistentStateComponent<BedrockAs
 
   @Override
   public void loadState(@NotNull State state) {
-    state = state;
+    this.state = state;
   }
 
   public static class State {
