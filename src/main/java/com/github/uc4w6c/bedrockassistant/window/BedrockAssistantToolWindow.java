@@ -3,6 +3,7 @@ package com.github.uc4w6c.bedrockassistant.window;
 import com.github.uc4w6c.bedrockassistant.window.component.MessagePanel;
 import com.intellij.icons.AllIcons;
 import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.ui.JBColor;
 import com.intellij.ui.components.JBTextArea;
 import com.intellij.util.ui.JBUI;
 import org.apache.commons.lang3.StringUtils;
@@ -56,7 +57,13 @@ public class BedrockAssistantToolWindow {
     inputArea.setLineWrap(true);
     inputArea.setWrapStyleWord(true);
     inputArea.setRows(5);
+    inputArea.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 2));
+    inputArea.setBackground(JBColor.WHITE);
+
     sendButton = new JButton("Send");
+    sendButton.setBackground(JBColor.BLUE);
+    sendButton.setFocusPainted(false);
+
     sendButton.addActionListener(actionEvent -> {
       if (StringUtils.isBlank(inputArea.getText())) {
         return;
@@ -73,9 +80,12 @@ public class BedrockAssistantToolWindow {
 
     JPanel inputPanel = new JPanel(new BorderLayout());
     inputPanel.setBorder(BorderFactory.createEmptyBorder());
+    inputPanel.setBackground(JBColor.LIGHT_GRAY);
     inputPanel.add(inputArea, BorderLayout.NORTH);
+
     JPanel sendButtonPanel = new JPanel(new BorderLayout());
     sendButtonPanel.add(sendButton, BorderLayout.EAST);
+    sendButtonPanel.setBackground(JBColor.LIGHT_GRAY);
     inputPanel.add(sendButtonPanel, BorderLayout.SOUTH);
 
     mainPanel.add(conversationScrollPane, BorderLayout.CENTER);

@@ -50,7 +50,7 @@ public class AnalyzeCodeAction extends AnAction {
     }
 
     ToolWindowManager toolWindowManager = ToolWindowManager.getInstance(project);
-    ToolWindow toolWindow = toolWindowManager.getToolWindow("BedrockAssistantToolWindow");
+    ToolWindow toolWindow = toolWindowManager.getToolWindow("BedrockAssistant");
     if (toolWindow == null) {
       throw new RuntimeException();
     }
