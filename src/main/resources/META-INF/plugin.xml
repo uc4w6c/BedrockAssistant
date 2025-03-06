@@ -11,7 +11,8 @@
     <extensions defaultExtensionNs="com.intellij">
         <toolWindow
                 factoryClass="com.github.uc4w6c.bedrockassistant.window.BedrockAssistantToolWindowFactory"
-                id="BedrockAssistantToolWindow"
+                id="BedrockAssistant"
+                displayName="BedrockAssistant"
                 anchor="right"/>
         <applicationConfigurable
                 parentId="tools"
