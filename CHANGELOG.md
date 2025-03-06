@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+## [0.2.2] - 2025-03-06
+
+- change the background of the input panel #26
+
 ## [0.2.1] - 2025-03-03
 
 - delete toolwindow open check when generating code #22
@@ -21,7 +25,8 @@
 
 - change the way to obtain token #15
 
-[Unreleased]: https://github.com/uc4w6c/BedrockAssistant/compare/v0.2.1...HEAD
+[Unreleased]: https://github.com/uc4w6c/BedrockAssistant/compare/v0.2.2...HEAD
+[0.2.2]: https://github.com/uc4w6c/BedrockAssistant/compare/v0.2.1...v0.2.2
 [0.2.1]: https://github.com/uc4w6c/BedrockAssistant/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/uc4w6c/BedrockAssistant/compare/v0.1.3...v0.2.0
 [0.1.3]: https://github.com/uc4w6c/BedrockAssistant/compare/v0.1.2...v0.1.3
